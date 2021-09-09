@@ -1,5 +1,23 @@
 # Importing necessary modules
 from tkinter import *
+from time import sleep
+import Adafruit_DHT
+import RPi.GPIO as GPIO
+import board
+
+# set up sensor input
+GPIO.setmode(GPIO.BCM)
+TEMP_INPUT = 21
+MOISTURE_INPUT = 18
+DHT_SENSOR = Adafruit_DHT.DHT22
+GPIO.setup(MOISTURE_INPUT, GPIO.IN)
+GPIO.setup(TEMP_INPUT, GPIO.IN)
+while True:
+    moisture = GPIO.input(MOISTURE_INPUT)
+    print(moisture)
+    humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, TEMP_INPUT)
+    print(temperature)
+    sleep(1)
 
 # =======================================================
 # Edit these variables to modify the UI elements
@@ -42,25 +60,21 @@ buttonFontSize = 10
 # Function that will be called when pressing the buttons
 # Button for increasing temperature
 def increaseTemperature():
-    # TODO
     return
 
 
 # Button for lowering temperature
 def lowerTemperature():
-    # TODO
     return
 
 
 # Button for increasing moisture level
 def increaseMoisture():
-    # TODO
     return
 
 
 # Button for lowering moisture level
 def lowerMoisture():
-    # TODO
     return
 
 
@@ -97,7 +111,7 @@ lblMoistHeader = Label(
 
 # Label for temperature value
 lblTempVal = Label(
-    text="00" + "°C",
+    text=temperature + "°C",
     font=(vFont, vFontSize),
     fg='black',
     bg='white',
@@ -107,7 +121,7 @@ lblTempVal = Label(
 
 # Label for moisture level value
 lblMoistVal = Label(
-    text="00" + "%",
+    text=moisture + "%",
     font=(vFont, vFontSize),
     fg='black',
     bg='white',
