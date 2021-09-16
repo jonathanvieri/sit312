@@ -5,6 +5,10 @@ import Adafruit_DHT
 import RPi.GPIO as GPIO
 import board
 
+#Set UI temperature and moisture
+global custom_temperature = 20
+global custom_moisture = 0
+
 # set up sensor input
 GPIO.setmode(GPIO.BCM)
 TEMP_INPUT = 21
@@ -13,10 +17,18 @@ DHT_SENSOR = Adafruit_DHT.DHT22
 GPIO.setup(MOISTURE_INPUT, GPIO.IN)
 GPIO.setup(TEMP_INPUT, GPIO.IN)
 while True:
-    moisture = GPIO.input(MOISTURE_INPUT)
-    print(moisture)
-    humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, TEMP_INPUT)
-    print(temperature)
+    actual_moisture = GPIO.input(MOISTURE_INPUT)
+    print(actual_moisture)
+    humidity, actual_temperature = Adafruit_DHT.read_retry(DHT_SENSOR, TEMP_INPUT)
+    print(actual_temperature)
+    if actual_temperature < custom_temperature - 1:
+        print("Plant is too cold")
+    elif actual_temperature > custom_temperature + 1:
+        print("Plant is too hot")
+    if actual_moisture == 0:
+        print("Plant is dry. Turning on hose")
+    elif actual_moisture == 1:
+        print("Plant is damp enough")
     sleep(1)
 
 # =======================================================
@@ -60,22 +72,30 @@ buttonFontSize = 10
 # Function that will be called when pressing the buttons
 # Button for increasing temperature
 def increaseTemperature():
-    return
+    custom_temperature += 1
+    result = str(custom_temperature) + "°C"
+    lblTempVal.config(text = result)
 
 
 # Button for lowering temperature
 def lowerTemperature():
-    return
+    custom_temperature -= 1
+    result = str(custom_temperature) + "°C"
+    lblTempVal.config(text = result)
 
 
 # Button for increasing moisture level
 def increaseMoisture():
-    return
+    custom_moisture += 1
+    result = str(custom_moisture) + "%"
+    lblMoistVal.config(text = result)
 
 
 # Button for lowering moisture level
 def lowerMoisture():
-    return
+    custom_moisture -= 1
+    result = str(custom_moisture) + "%"
+    lblMoistVal.config(text = result)
 
 
 # =======================================================
@@ -111,7 +131,7 @@ lblMoistHeader = Label(
 
 # Label for temperature value
 lblTempVal = Label(
-    text=temperature + "°C",
+    text=custom_temperature + "°C",
     font=(vFont, vFontSize),
     fg='black',
     bg='white',
@@ -121,7 +141,7 @@ lblTempVal = Label(
 
 # Label for moisture level value
 lblMoistVal = Label(
-    text=moisture + "%",
+    text=custom_moisture + "%",
     font=(vFont, vFontSize),
     fg='black',
     bg='white',
