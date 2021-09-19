@@ -54,15 +54,13 @@ hTempText = 'Temperature'
 hMoistText = 'Moisture'
 
 # Adjustment title label text & font properties
-adjustmentTitle = 'Adjust Temperature/Moisture'
+adjustmentTitle = 'Adjust Temperature'
 atFont = 'Arial'
 atFontSize = 12
 
 # Button texts
-buttonRaiseTemp = 'RAISE'
-buttonLowerTemp = 'LOWER'
-buttonRaiseMoisture = 'RAISE'
-buttonLowerMoisture = 'LOWER'
+buttonRaiseTemp = 'RAISE TEMP.'
+buttonLowerTemp = 'LOWER TEMP.'
 
 # Button text font properties
 buttonFont = 'Arial'
@@ -82,21 +80,6 @@ def lowerTemperature():
     custom_temperature -= 1
     result = str(custom_temperature) + "°C"
     lblTempVal.config(text = result)
-
-
-# Button for increasing moisture level
-def increaseMoisture():
-    custom_moisture += 1
-    result = str(custom_moisture) + "%"
-    lblMoistVal.config(text = result)
-
-
-# Button for lowering moisture level
-def lowerMoisture():
-    custom_moisture -= 1
-    result = str(custom_moisture) + "%"
-    lblMoistVal.config(text = result)
-
 
 # =======================================================
 # End
@@ -164,7 +147,7 @@ lblAdjustTitle = Label(
 btnUpTemp = Button(
     text=buttonRaiseTemp,
     font=(buttonFont, buttonFontSize),
-    width=8,
+    width=24,
     height=2,
     command=increaseTemperature
 )
@@ -173,27 +156,9 @@ btnUpTemp = Button(
 btnLowerTemp = Button(
     text=buttonLowerTemp,
     font=(buttonFont, buttonFontSize),
-    width=8,
+    width=24,
     height=2,
     command=lowerTemperature
-)
-
-# Increase moisture level button
-btnUpMoist = Button(
-    text=buttonRaiseMoisture,
-    font=(buttonFont, buttonFontSize),
-    width=8,
-    height=2,
-    command=increaseMoisture
-)
-
-# Lower moisture level button
-btnLowerMoist = Button(
-    text=buttonLowerMoisture,
-    font=(buttonFont, buttonFontSize),
-    width=8,
-    height=2,
-    command=lowerMoisture
 )
 
 # Header labels placements
@@ -210,7 +175,5 @@ lblAdjustTitle.place(x=76, y=100)
 # Button placements
 btnUpTemp.place(x=88, y=150)
 btnLowerTemp.place(x=88, y=195)
-btnUpMoist.place(x=215, y=150)
-btnLowerMoist.place(x=215, y=195)
 
 window.mainloop()
