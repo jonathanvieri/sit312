@@ -1,4 +1,4 @@
-# SIT320 - Group 21
+# SIT312 System Designs and Prototyping - Group 21
 
 Our project is to create a **Smart Pot Plant system** which brings ease to planting!
 
